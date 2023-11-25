@@ -49,8 +49,15 @@
 {{define "js"}}
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        function val(){
-            
-        }
+    let card;
+    let stripe;
+    stripe = Stripe({{.StripePublickKey}});
+    function val(){
+        
+    }
+    (()=>({
+        const elements = stripe.elements()
+        console.log(elements);
+    ))
     </script>
 {{end}}

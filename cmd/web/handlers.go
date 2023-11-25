@@ -1,9 +1,26 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 func (app *application) VirtualTerminal(w http.ResponseWriter, r *http.Request) {
-	if err := app.renderTemplate(w, r, "terminal", nil); err != nil {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	publicKey := os.Getenv("STRIPE_PUBLIC_KEY")
+
+	td := &TemplateData{
+		StripePublickKey: publicKey,
+	}
+
+	if err := app.renderTemplate(w, r, "terminal", td); err != nil {
 		app.errorLog.Println(err)
 	}
 }

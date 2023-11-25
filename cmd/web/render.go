@@ -8,30 +8,16 @@ import (
 	"strings"
 )
 
-type templateData struct {
-	StringMap       map[string]string
-	IntMap          map[string]int
-	FloatMap        map[string]float32
-	Data            map[string]interface{}
-	CSRFToken       string
-	Flash           string
-	Warning         string
-	Error           string
-	IsAuthenticated int
-	API             string
-	CSSVersion      string
-}
-
 var functions = template.FuncMap{}
 
 //go:embed templates
 var templateFS embed.FS
 
-func (app *application) addDefaultData(td *templateData, r *http.Request) *templateData {
+func (app *application) addDefaultData(td *TemplateData, r *http.Request) *TemplateData {
 	return td
 }
 
-func (app *application) renderTemplate(w http.ResponseWriter, r *http.Request, page string, td *templateData, partials ...string) error {
+func (app *application) renderTemplate(w http.ResponseWriter, r *http.Request, page string, td *TemplateData, partials ...string) error {
 	var t *template.Template
 	var err error
 	templateToRender := fmt.Sprintf("templates/%s.page.gohtml", page)
@@ -49,7 +35,7 @@ func (app *application) renderTemplate(w http.ResponseWriter, r *http.Request, p
 	}
 
 	if td == nil {
-		td = &templateData{}
+		td = &TemplateData{}
 	}
 
 	td = app.addDefaultData(td, r)
