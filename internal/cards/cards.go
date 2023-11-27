@@ -68,7 +68,7 @@ func cardErrorMessage(code stripe.ErrorCode) string {
 	case stripe.ErrorCodePostalCodeInvalid:
 		msg = "Your postal code is invalid"
 	default:
-		msg = "You card was declined"
+		msg = "Something went wrong"
 	}
 
 	return msg

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -15,7 +16,7 @@ func (app *application) VirtualTerminal(w http.ResponseWriter, r *http.Request) 
 	}
 
 	publicKey := os.Getenv("STRIPE_KEY")
-
+	fmt.Println(publicKey)
 	td := &TemplateData{
 		StripePublickKey: publicKey,
 	}
