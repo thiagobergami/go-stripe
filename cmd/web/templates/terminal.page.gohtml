@@ -62,6 +62,12 @@
     const processing = document.getElementById("processing-payment");
     
     stripe = Stripe({{.StripePublickKey}});
+
+    const hidePayButton = () => {
+        payButton.classList.add("d-none");
+        processing.classList.remove("d-none");
+    }
+
     const val = () =>{
         let form = document.getElementById("charge_form");
         if(form.checkValidity() === false){
@@ -72,6 +78,7 @@
         }
 
         form.classList.add("was-validated");
+        hidePayButton();
     }
     ;(() => {
         // create stripe & elements
