@@ -14,7 +14,7 @@ func (app *application) VirtualTerminal(w http.ResponseWriter, r *http.Request) 
 		log.Fatal("Error loading .env file")
 	}
 
-	publicKey := os.Getenv("STRIPE_PUBLIC_KEY")
+	publicKey := os.Getenv("STRIPE_KEY")
 
 	td := &TemplateData{
 		StripePublickKey: publicKey,
