@@ -116,7 +116,7 @@
             },
             body: JSON.stringify(payload),
         }
-        console.log(requestOptions)
+        
         fetch("http://localhost:4001/api/payment-intent", requestOptions)
             .then(response => response.text())
             .then(response => {
@@ -147,6 +147,8 @@
 
                                 showCardSuccess();
                                 //would submit the form
+
+                                document.getElementById("charge_form").submit();
                             }
                         }
                     })
