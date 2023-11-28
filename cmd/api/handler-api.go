@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -21,18 +20,16 @@ type jsonResponse struct {
 	ID      int    `json:"id,omitempty"`
 }
 
-func (app *application) PostPaymentIntent(w http.ResponseWriter, r *http.Request) {
+func (app *application) GetPaymentIntent(w http.ResponseWriter, r *http.Request) {
 	var payload stripePayload
 
 	err := json.NewDecoder(r.Body).Decode(&payload)
-
 	if err != nil {
 		app.errorLog.Println(err)
 		return
 	}
 
 	amount, err := strconv.Atoi(payload.Amount)
-
 	if err != nil {
 		app.errorLog.Println(err)
 		return
@@ -43,7 +40,6 @@ func (app *application) PostPaymentIntent(w http.ResponseWriter, r *http.Request
 		Key:      app.config.stripe.key,
 		Currency: payload.Currency,
 	}
-	fmt.Println(card.Secret)
 	okay := true
 
 	pi, msg, err := card.Charge(payload.Currency, amount)

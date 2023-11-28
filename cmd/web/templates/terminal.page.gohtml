@@ -59,13 +59,11 @@
     <script>
 
     let card;
-    let stripe;
 
     const cardMessages = document.getElementById("card-messages");
     const payButton = document.getElementById("pay-button");
     const processing = document.getElementById("processing-payment");
-    console.log({{.StripePublickKey}})
-    stripe = Stripe({{.StripePublickKey}});
+    const stripe = Stripe({{.StripePublickKey}});
 
     const hidePayButton = () => {
         payButton.classList.add("d-none");
@@ -118,11 +116,10 @@
             },
             body: JSON.stringify(payload),
         }
-
+        console.log(requestOptions)
         fetch("http://localhost:4001/api/payment-intent", requestOptions)
             .then(response => response.text())
             .then(response => {
-                console.log(response)
                 try {
                     const data = JSON.parse(response);
                     stripe.confirmCardPayment(data.client_secret, {
@@ -136,7 +133,7 @@
                         if (result.error){
                             // card declined, or something went wrong with the card
                             console.log(result)
-                            shorCardError(result.error.message);
+                            showCardError(result.error.message);
                             showPayButtons();
                         }
                         else if(result.paymentIntent) {

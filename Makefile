@@ -1,10 +1,9 @@
+include .env
+
 SHELL=cmd
 GOSTRIPE_PORT=4000
 API_PORT=4001
 DSN="root@(localhost:3306)/widgets?parseTime=true&tls=false"
-
-include .env
-export $(shell sed 's/=.*//' .env)
 
 ## build: builds all binaries
 build: clean build_front build_back

@@ -1,6 +1,8 @@
 package cards
 
 import (
+	"fmt"
+
 	"github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/paymentintent"
 )
@@ -26,13 +28,12 @@ func (c *Card) Charge(currency string, amount int) (*stripe.PaymentIntent, strin
 
 func (c *Card) CreatePaymentIntent(currency string, amount int) (*stripe.PaymentIntent, string, error) {
 	stripe.Key = c.Secret
-
+	fmt.Println("stripe key: ", stripe.Key)
 	// create a payment intent
 	params := &stripe.PaymentIntentParams{
 		Amount:   stripe.Int64(int64(amount)),
 		Currency: stripe.String(currency),
 	}
-
 	//params.AddMetadata("key", "value")
 	pi, err := paymentintent.New(params)
 
